@@ -19,6 +19,7 @@ int main( int argc, char** argv )
 {
     //! [Load image]
     CommandLineParser parser( argc, argv, "{@input | lena.jpg | input image}" );
+    //Mat src = imread( samples::findFile( parser.get<String>( "@input" ) ), IMREAD_COLOR );
     Mat src = imread( samples::findFile( parser.get<String>( "@input" ) ), IMREAD_COLOR );
     if( src.empty() )
     {
