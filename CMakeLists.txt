@@ -8,6 +8,7 @@ cmake_minimum_required (VERSION 3.8)
 # via the command line or GUI
 find_package(OpenCV REQUIRED)
 
+
 # If the package has been found, several variables will
 # be set, you can find the full list with descriptions
 # in the OpenCVConfig.cmake file.
@@ -18,12 +19,11 @@ message(STATUS "    version: ${OpenCV_VERSION}")
 message(STATUS "    libraries: ${OpenCV_LIBS}")
 message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
 
-
 project ("Opencv_Learning_Notes")
 
 
 # 包含子项目。
-add_subdirectory ("0_Example_CMake")
+#add_subdirectory ("0_Example_CMake")
 add_subdirectory ("1_Introduction")
 add_subdirectory ("2_ImgProc")
 add_subdirectory ("3_ImgTrans")

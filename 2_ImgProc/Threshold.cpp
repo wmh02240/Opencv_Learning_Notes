@@ -49,7 +49,7 @@ static void Threshold_Demo( int, void* )
 int main( int argc, char** argv )
 {
     //! [load]
-    String imageName("stuff.jpg"); // by default
+    String imageName("D:\\GitHub\\Opencv_Learning_Notes\\Sources\\data\\starry_night.jpg"); // by default
     if (argc > 1)
     {
         imageName = argv[1];
@@ -70,13 +70,10 @@ int main( int argc, char** argv )
     //! [window]
 
     //! [trackbar]
-    createTrackbar( trackbar_type,
-                    window_name, &threshold_type,
-                    max_type, Threshold_Demo ); // Create a Trackbar to choose type of Threshold
-
-    createTrackbar( trackbar_value,
-                    window_name, &threshold_value,
-                    max_value, Threshold_Demo ); // Create a Trackbar to choose Threshold value
+    //! Create a Trackbar to choose type of Threshold
+    createTrackbar( trackbar_type, window_name, &threshold_type, max_type, Threshold_Demo ); 
+    //! Create a Trackbar to choose Threshold value
+    createTrackbar( trackbar_value, window_name, &threshold_value, max_value, Threshold_Demo ); 
     //! [trackbar]
 
     Threshold_Demo( 0, 0 ); // Call the function to initialize
