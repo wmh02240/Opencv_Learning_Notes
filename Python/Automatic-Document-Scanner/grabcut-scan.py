@@ -147,4 +147,4 @@ with open('time.csv', 'w') as f:
     for data in runtime:
         writer.writerow(data)
 
-cv2.destroyAllWindows()
+# cv2.destroyAllWindows()

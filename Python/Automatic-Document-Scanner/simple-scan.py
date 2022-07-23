@@ -34,9 +34,10 @@ def scan(img):
     # Create a copy of resized original image for later use
     orig_img = img.copy()
     # Repeated Closing operation to remove text from the document.
-    kernel = np.ones((5, 5), np.uint8)
-    img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel, iterations=5)
+    kernel = np.ones((5, 5), np.uint8)              # 结构元大小
+    img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel, iterations=5)           # 形态学中的闭运算
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    cv2.imwrite("./gray.png", gray)
     gray = cv2.GaussianBlur(gray, (11, 11), 0)
     # Edge Detection.
     canny = cv2.Canny(gray, 0, 200)
