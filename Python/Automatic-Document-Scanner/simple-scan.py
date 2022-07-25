@@ -34,13 +34,16 @@ def scan(img):
     # Create a copy of resized original image for later use
     orig_img = img.copy()
     # Repeated Closing operation to remove text from the document.
-    kernel = np.ones((5, 5), np.uint8)              # 结构元大小
-    img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel, iterations=5)           # 形态学中的闭运算
+    # 结构元大小
+    kernel = np.ones((5, 5), np.uint8)
+    # 形态学中的闭运算
+    img = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel, iterations=5)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    cv2.imwrite("./gray.png", gray)
+    # cv2.imwrite("./gray.png", gray)
     gray = cv2.GaussianBlur(gray, (11, 11), 0)
     # Edge Detection.
     canny = cv2.Canny(gray, 0, 200)
+    # cv2.imwrite("./canny.png", gray)
     canny = cv2.dilate(canny, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (21, 21)))
 
     # Finding contours for the detected edges.
@@ -81,8 +84,7 @@ def scan(img):
 
     h, w = orig_img.shape[:2]
     # Getting the homography.
-    homography, mask = cv2.findHomography(np.float32(corners), np.float32(destination_corners), method=cv2.RANSAC,
-                                          ransacReprojThreshold=3.0)
+    homography, mask = cv2.findHomography(np.float32(corners), np.float32(destination_corners), method=cv2.RANSAC, ransacReprojThreshold=3.0)
     # Perspective transform using homography.
     un_warped = cv2.warpPerspective(orig_img, np.float32(homography), (w, h), flags=cv2.INTER_LINEAR)
     # Crop
@@ -94,13 +96,10 @@ for img_path in glob.glob('inputs/*.jpg'):
     try:
         img = cv2.imread(img_path)
         print(img_path)
-
         scanned_img = scan(img)
-
         # cv2.imshow("scanner", scanned_img)
         cv2.imwrite('outputs/' + img_path.split('/')[-1], scanned_img)
         print("scanned")
-
         key = cv2.waitKey(0)
         if key == 27:
             break

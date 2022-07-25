@@ -13,55 +13,56 @@ using namespace cv;
 /**
  * @function main
  */
-int main( int argc, char** argv )
+int main(int argc, char** argv)
 {
-    //![variables]
-    // Declare the variables we are going to use
-    Mat src, src_gray, dst;
-    int kernel_size = 3;
-    int scale = 1;
-    int delta = 0;
-    int ddepth = CV_16S;
-    const char* window_name = "Laplace Demo";
-    //![variables]
+	//![variables]
+	// Declare the variables we are going to use
+	Mat src, src_gray, dst;
+	int kernel_size = 3;
+	int scale = 1;
+	int delta = 0;
+	int ddepth = CV_16S;
+	const char* window_name = "Laplace Demo";
+	//![variables]
 
-    //![load]
-    const char* imageName = argc >=2 ? argv[1] : "lena.jpg";
+	//![load]
+	const char* imageName = argc >= 2 ? argv[1] : "lena.jpg";
 
-    src = imread( samples::findFile( imageName ), IMREAD_COLOR ); // Load an image
+	// src = imread(samples::findFile(imageName), IMREAD_COLOR); // Load an image
+	src = imread("D:\\GitHub\\Opencv_Learning_Notes\\Sources\\data\\lena.jpg", IMREAD_COLOR);
 
-    // Check if image is loaded fine
-    if(src.empty()){
-        printf(" Error opening image\n");
-        printf(" Program Arguments: [image_name -- default lena.jpg] \n");
-        return -1;
-    }
-    //![load]
+	// Check if image is loaded fine
+	if (src.empty()) {
+		printf(" Error opening image\n");
+		printf(" Program Arguments: [image_name -- default lena.jpg] \n");
+		return -1;
+	}
+	//![load]
 
-    //![reduce_noise]
-    // Reduce noise by blurring with a Gaussian filter ( kernel size = 3 )
-    GaussianBlur( src, src, Size(3, 3), 0, 0, BORDER_DEFAULT );
-    //![reduce_noise]
+	//![reduce_noise]
+	// Reduce noise by blurring with a Gaussian filter ( kernel size = 3 )
+	GaussianBlur(src, src, Size(3, 3), 0, 0, BORDER_DEFAULT);
+	//![reduce_noise]
 
-    //![convert_to_gray]
-    cvtColor( src, src_gray, COLOR_BGR2GRAY ); // Convert the image to grayscale
-    //![convert_to_gray]
+	//![convert_to_gray]
+	cvtColor(src, src_gray, COLOR_BGR2GRAY); // Convert the image to grayscale
+	//![convert_to_gray]
 
-    /// Apply Laplace function
-    Mat abs_dst;
-    //![laplacian]
-    Laplacian( src_gray, dst, ddepth, kernel_size, scale, delta, BORDER_DEFAULT );
-    //![laplacian]
+	/// Apply Laplace function
+	Mat abs_dst;
+	//![laplacian]
+	Laplacian(src_gray, dst, ddepth, kernel_size, scale, delta, BORDER_DEFAULT);
+	//![laplacian]
 
-    //![convert]
-    // converting back to CV_8U
-    convertScaleAbs( dst, abs_dst );
-    //![convert]
+	//![convert]
+	// converting back to CV_8U
+	convertScaleAbs(dst, abs_dst);
+	//![convert]
 
-    //![display]
-    imshow( window_name, abs_dst );
-    waitKey(0);
-    //![display]
+	//![display]
+	imshow(window_name, abs_dst);
+	waitKey(0);
+	//![display]
 
-    return 0;
+	return 0;
 }

@@ -15,7 +15,8 @@ int main(int argc, char** argv)
     const char* filename = argc >=2 ? argv[1] : "smarties.png";
 
     // Loads an image
-    Mat src = imread( samples::findFile( filename ), IMREAD_COLOR );
+    // Mat src = imread( samples::findFile( filename ), IMREAD_COLOR );
+    Mat src = imread("D:\\GitHub\\Opencv_Learning_Notes\\Sources\\data\\smarties.png", IMREAD_COLOR);
 
     // Check if image is loaded fine
     if(src.empty()){

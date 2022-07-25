@@ -16,8 +16,7 @@ if not DOWNLOADS_PATH.is_dir():
 
 
 def order_points(pts):
-    '''Rearrange coordinates to order:
-       top-left, top-right, bottom-right, bottom-left'''
+    '''Rearrange coordinates to order:top-left, top-right, bottom-right, bottom-left'''
     rect = np.zeros((4, 2), dtype='float32')
     pts = np.array(pts)
     s = pts.sum(axis=1)
@@ -77,7 +76,8 @@ def scan(img):
     gray = cv2.GaussianBlur(gray, (11, 11), 0)
     # Edge Detection.
     canny = cv2.Canny(gray, 0, 200)
-    canny = cv2.dilate(canny, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5)))
+    canny = cv2.dilate(canny, cv2.getStructuringElement(
+        cv2.MORPH_ELLIPSE, (5, 5)))
 
     # Finding contours for the detected edges.
     contours, hierarchy = cv2.findContours(canny, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
@@ -103,10 +103,10 @@ def scan(img):
     destination_corners = find_dest(corners)
 
     # Getting the homography.
-    M = cv2.getPerspectiveTransform(np.float32(corners), np.float32(destination_corners))
+    M = cv2.getPerspectiveTransform(np.float32(
+        corners), np.float32(destination_corners))
     # Perspective transform using homography.
-    final = cv2.warpPerspective(orig_img, M, (destination_corners[2][0], destination_corners[2][1]),
-                                flags=cv2.INTER_LINEAR)
+    final = cv2.warpPerspective(orig_img, M, (destination_corners[2][0], destination_corners[2][1]), flags=cv2.INTER_LINEAR)
     return final
 
 
@@ -145,7 +145,8 @@ if uploaded_file is not None:
 
         # Create a canvas component
         canvas_result = st_canvas(
-            fill_color="rgba(255, 165, 0, 0.3)",  # Fixed fill color with some opacity
+            # Fixed fill color with some opacity
+            fill_color="rgba(255, 165, 0, 0.3)",
             stroke_width=3,
             background_image=Image.open(uploaded_file).resize((h_, w_)),
             update_streamlit=True,
@@ -157,15 +158,18 @@ if uploaded_file is not None:
         st.sidebar.caption('Happy with the manual selection?')
         if st.sidebar.button('Get Scanned'):
             # Do something interesting with the image data and paths
-            points = order_points([i[1:3] for i in canvas_result.json_data['objects'][0]['path'][:4]])
+            points = order_points(
+                [i[1:3] for i in canvas_result.json_data['objects'][0]['path'][:4]])
             points = np.multiply(points, w / 400)
 
             dest = find_dest(points)
 
             # Getting the homography.
-            M = cv2.getPerspectiveTransform(np.float32(points), np.float32(dest))
+            M = cv2.getPerspectiveTransform(
+                np.float32(points), np.float32(dest))
             # Perspective transform using homography.
-            final = cv2.warpPerspective(image, M, (dest[2][0], dest[2][1]), flags=cv2.INTER_LINEAR)
+            final = cv2.warpPerspective(
+                image, M, (dest[2][0], dest[2][1]), flags=cv2.INTER_LINEAR)
             st.image(final, channels='BGR', use_column_width=True)
     else:
         with col1:

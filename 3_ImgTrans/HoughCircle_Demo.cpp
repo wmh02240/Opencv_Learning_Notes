@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file HoughCircle_Demo.cpp
  * @brief Demo code for Hough Transform
  * @author OpenCV team
@@ -27,18 +27,28 @@ namespace
 
     void HoughDetection(const Mat& src_gray, const Mat& src_display, int cannyThreshold, int accumulatorThreshold)
     {
-        // will hold the results of the detection
+        // will hold the results of the detection，浮点矢量（x, y, radius）
         std::vector<Vec3f> circles;
         // runs the actual detection
+        // HOUGH_GRADIENT 表示检测方法，目前 OpenCV 中就霍夫梯度法一种可以使用，标识符为 HOUGH_GRADIENT。
+        // 1参数表示累加面分辨率，1表示和原始分辨率一致。
+        // src_gray.rows/8表示两个圆心之间的最小距离，小于该值认为同一个圆。
+        // cannyThreshold表示Canny 边缘检测的高阈值，低阈值被自动置为高阈值的一半，默认为 100。
+        // accumulatorThreshold表示累加平面某点是否是圆心的判定阈值。它越大，能通过检测的圆就更接近完美的圆形，默认为 100。
+        // 最后两个参数表示圆半径的最小最大值。
         HoughCircles( src_gray, circles, HOUGH_GRADIENT, 1, src_gray.rows/8, cannyThreshold, accumulatorThreshold, 0, 0 );
 
         // clone the colour, input image for displaying purposes
         Mat display = src_display.clone();
         for( size_t i = 0; i < circles.size(); i++ )
-        {
+        {   
+            // cvRound:四舍五入
+            // cvFloor:向下取整
+            // cvCeil:向上取整
             Point center(cvRound(circles[i][0]), cvRound(circles[i][1]));
             int radius = cvRound(circles[i][2]);
             // circle center
+            // Scalar：标量, 在opencv中广泛用于值传递，https://blog.csdn.net/jndingxin/article/details/112606544
             circle( display, center, 3, Scalar(0,255,0), -1, 8, 0 );
             // circle outline
             circle( display, center, radius, Scalar(0,0,255), 3, 8, 0 );
@@ -60,8 +70,8 @@ int main(int argc, char** argv)
     {
        imageName = argv[1];
     }
-    src = imread( samples::findFile( imageName ), IMREAD_COLOR );
-
+    // src = imread( samples::findFile( imageName ), IMREAD_COLOR );
+    src = imread("D:\\GitHub\\Opencv_Learning_Notes\\Sources\\data\\stuff.jpg", IMREAD_COLOR);
     if( src.empty() )
     {
         std::cerr << "Invalid input image\n";
@@ -96,6 +106,7 @@ int main(int argc, char** argv)
         accumulatorThreshold = std::max(accumulatorThreshold, 1);
 
         //runs the detection, and update the display
+        // 霍夫圆检测的输入可以不是二值图，灰度图就可以。
         HoughDetection(src_gray, src, cannyThreshold, accumulatorThreshold);
 
         // get user key

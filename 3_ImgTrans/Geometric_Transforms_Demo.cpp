@@ -1,6 +1,6 @@
 /**
  * @function Geometric_Transforms_Demo.cpp
- * @brief Demo code for Geometric Transforms
+ * @brief Demo code for Geometric Transforms ¼¸ºÎ±ä»»
  * @author OpenCV team
  */
 
@@ -19,7 +19,8 @@ int main( int argc, char** argv )
 {
     //! [Load the image]
     CommandLineParser parser( argc, argv, "{@input | lena.jpg | input image}" );
-    Mat src = imread( samples::findFile( parser.get<String>( "@input" ) ) );
+    // Mat src = imread( samples::findFile( parser.get<String>( "@input" ) ) );
+    Mat src = imread("D:\\GitHub\\Opencv_Learning_Notes\\Sources\\data\\aloeGT.png");
     if( src.empty() )
     {
         cout << "Could not open or find the image!\n" << endl;
