@@ -2,6 +2,10 @@
  * @function moments_demo.cpp
  * @brief Demo code to calculate moments
  * @author OpenCV team
+ * moments表示图像的矩。
+ * 从图像中计算出来的矩通常描述了图像不同种类的几何特征如：大小、灰度、方向、形状等，图像矩广泛应用于模式识别、
+ * 目标分类、目标识别与防伪估计、图像编码与重构等领域。
+ * https://blog.csdn.net/Vichael_Chan/article/details/100881617
  */
 
 #include "opencv2/imgcodecs.hpp"
@@ -27,7 +31,8 @@ int main( int argc, char** argv )
 {
     /// Load source image
     CommandLineParser parser( argc, argv, "{@input | stuff.jpg | input image}" );
-    Mat src = imread( samples::findFile( parser.get<String>( "@input" ) ) );
+    //Mat src = imread( samples::findFile( parser.get<String>( "@input" ) ) );
+    Mat src = imread("D:\\GitHub\\Opencv_Learning_Notes\\Sources\\data\\stuff.jpg", IMREAD_COLOR);
 
     if( src.empty() )
     {
@@ -77,8 +82,7 @@ void thresh_callback(int, void* )
     for( size_t i = 0; i < contours.size(); i++ )
     {
         //add 1e-5 to avoid division by zero
-        mc[i] = Point2f( static_cast<float>(mu[i].m10 / (mu[i].m00 + 1e-5)),
-                         static_cast<float>(mu[i].m01 / (mu[i].m00 + 1e-5)) );
+        mc[i] = Point2f( static_cast<float>(mu[i].m10 / (mu[i].m00 + 1e-5)), static_cast<float>(mu[i].m01 / (mu[i].m00 + 1e-5)) );
         cout << "mc[" << i << "]=" << mc[i] << endl;
     }
 

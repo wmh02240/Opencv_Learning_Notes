@@ -26,7 +26,8 @@ int main( int argc, char** argv )
 {
     /// Load source image and convert it to gray
     CommandLineParser parser( argc, argv, "{@input | stuff.jpg | input image}" );
-    Mat src = imread( samples::findFile( parser.get<String>( "@input" ) ) );
+    //Mat src = imread( samples::findFile( parser.get<String>( "@input" ) ) );
+    Mat src = imread("D:\\GitHub\\Opencv_Learning_Notes\\Sources\\data\\stuff.jpg", IMREAD_COLOR);
     if( src.empty() )
     {
         cout << "Could not open or find the image!\n" << endl;
@@ -67,7 +68,11 @@ void thresh_callback(int, void* )
     /// Find the convex hull object for each contour
     vector<vector<Point> >hull( contours.size() );
     for( size_t i = 0; i < contours.size(); i++ )
-    {
+    {   
+        /*
+        凸包：通俗的话来解释凸包：给定二维平面上的点集，凸包就是将最外层的点连接起来构成的凸多边形，它能包含点集中所有的点。
+        hull:输出凸包结果，n * 1 *2 数据结构，n为外包围圈点数
+        */
         convexHull( contours[i], hull[i] );
     }
 

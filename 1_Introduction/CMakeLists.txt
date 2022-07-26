@@ -8,6 +8,7 @@ cmake_minimum_required (VERSION 3.8)
 add_executable (display_image "display_image.cpp")
 add_executable (documentation "documentation.cpp")
 add_executable (introduction_windows_vs "introduction_windows_vs.cpp")
+add_executable (mat_the_basic_image_container "mat_the_basic_image_container/mat_the_basic_image_container.cpp")
 
 
 # TODO: 如有需要，请添加测试并安装目标。
@@ -15,3 +16,4 @@ add_executable (introduction_windows_vs "introduction_windows_vs.cpp")
 target_link_libraries(display_image PRIVATE ${OpenCV_LIBS})
 target_link_libraries(documentation PRIVATE ${OpenCV_LIBS})
 target_link_libraries(introduction_windows_vs PRIVATE ${OpenCV_LIBS})
+target_link_libraries(mat_the_basic_image_container PRIVATE ${OpenCV_LIBS})
